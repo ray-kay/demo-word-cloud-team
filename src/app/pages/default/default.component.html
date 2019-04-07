@@ -1,0 +1,8 @@
+<h2>User Data</h2>
+<div *ngFor="let word of wordsInput">
+    <input [value]="word.name" type="text" disabled/>
+</div>
+<div>
+    <input [(ngModel)]="inputValue" type="text" />
+    <button (click)="addWord(inputValue)">Add</button>
+</div>
