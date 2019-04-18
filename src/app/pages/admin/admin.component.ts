@@ -9,15 +9,24 @@ import { Observable } from 'rxjs';
     styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-
+    wordCloudData: IUserData[] = [];
     itemsCollection: AngularFirestoreCollection;
-    words: Observable<IUserData[]>;
 
     constructor(private db: AngularFirestore) {
         this.itemsCollection = this.db.collection('items');
     }
 
-    ngOnInit() {
-        this.words = this.itemsCollection.valueChanges() as Observable<IUserData[]>;
+    async ngOnInit() {
+        this.itemsCollection.valueChanges().subscribe(
+            (userData: IUserData[]) => {
+                this.wordCloudData = userData;
+            }
+        );
+    }
+
+    updateWeight(userInput: IUserData, weightChange: number): void {
+        userInput.isNew = false;
+        userInput.weight += weightChange;
+        this.itemsCollection.doc(userInput.id).set(userInput);
     }
 }

@@ -10,6 +10,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { AdminComponent } from './pages/admin/admin.component';
 import { DefaultComponent } from './pages/default/default.component';
+import { TagCloudModule } from 'angular-tag-cloud-module';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { DefaultComponent } from './pages/default/default.component';
         CommonModule,
         FormsModule,
         AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule
+        AngularFirestoreModule,
+        TagCloudModule
     ],
     providers: [],
     bootstrap: [AppComponent]

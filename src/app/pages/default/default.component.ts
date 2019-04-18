@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/firestore';
+import { CloudData } from 'angular-tag-cloud-module';
 
-export interface IUserData {
-    name: string;
+export interface IUserData extends CloudData {
+    id?: string;
+    isNew: boolean;
 }
 
 @Component({
@@ -24,10 +26,20 @@ export class DefaultComponent implements OnInit {
     }
 
     addWord(input: string) {
-        // add to fb
-        this.itemsCollection.add({ name: input });
+        const newItem: IUserData = {
+            id: null,
+            text: input,
+            weight: 1,
+            isNew: true
+        };
+        // add to fb and update in payload for easier reference as admin
+        this.itemsCollection.add(newItem).then(
+            (value) => {
+                this.itemsCollection.doc(value.id).update({id: value.id});
+            }
+        );
         // add user list
-        this.wordsInput.push({ name: input });
+        this.wordsInput.push(newItem);
         this.inputValue = '';
     }
 

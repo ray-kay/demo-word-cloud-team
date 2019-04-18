@@ -1,6 +1,17 @@
-<h2>Firebase Data</h2>
+<h2>Team Input</h2>
+<div class="team-input-container">
 <ul>
-    <li class="text" *ngFor="let word of words | async">
-        {{word.name}}
+    <li class="text" *ngFor="let userInput of wordCloudData">
+        {{userInput.text}} ({{userInput.weight}})
+        <button (click)="updateWeight(userInput, 1)">+</button>
+        <button (click)="updateWeight(userInput, -1)">-</button>
     </li>
 </ul>
+</div>
+<div class="tag-cloud-container">
+    <angular-tag-cloud
+        [data]="wordCloudData" 
+        [width]="1"
+        [overflow]="true">
+    </angular-tag-cloud>
+</div>
